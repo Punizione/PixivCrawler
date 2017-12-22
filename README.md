@@ -37,5 +37,5 @@ see [NW.js Documentation](http://docs.nwjs.io/en/latest/For%20Users/Getting%20St
 本项目内容采用 [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0) 授权。
 
 <br>
-The content of this project itself is licensed under the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+The content of this project itself is licensed under the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0) .
 
