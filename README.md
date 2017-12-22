@@ -8,7 +8,7 @@ see [NW.js Documentation](http://docs.nwjs.io/en/latest/For%20Users/Getting%20St
 
 # Usage
 
-[example](1.gif)
+![example](1.gif)
 
 
 # Thanks
