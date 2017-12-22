@@ -1,7 +1,7 @@
 # PixivCrawler
 
-这是一个Win10平台上的Pixiv图片爬虫。访问 [PixivCrawler]()以获取更多信息。<br>
-PixivCrawler is a crawler for Pixiv.net. Visit [PixivCrawler]()(Chinese Only) for more infomation.
+这是一个Win10平台上的Pixiv图片爬虫。访问 [PixivCrawler](https://delitto.top/post/talk8/)以获取更多信息。<br>
+PixivCrawler is a crawler for Pixiv.net. Visit [PixivCrawler](https://delitto.top/post/talk8/)(Chinese Only) for more infomation.
 
 # Build
 see [NW.js Documentation](http://docs.nwjs.io/en/latest/For%20Users/Getting%20Started/)
