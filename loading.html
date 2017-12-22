@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+		<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+		<link type="text/css" rel="stylesheet" href="css/color.css" />
+		<link type="text/css" rel="stylesheet" href="css/custom.css" />
+		<link type="text/css" rel="stylesheet" href="css/preloader.css" />
+		<link type="text/css" rel="stylesheet" href="css/style.css" />
+		<meta charset="UTF-8">
+	</head>
+	<body>
+		<div id="loader-wrapper">
+			<div id="loader"></div>
+			<div class="loader-section section-left"></div>
+			<div class="loader-section section-right"></div>
+		</div>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/materialize.min.js"></script>
+		<script type="text/javascript" src="js/jquery.tmpl.min.js"></script>
+	</body>
+	<script>
+		var gui = require('nw.gui');
+
+		var currentWindow = gui.Window.get(); // Get reference to loading.html
+
+		var exec = require('child_process');
+		exec.exec('Server.exe', {cwd:'./dist/Server/'}, function (error, stdout, stderr){ // Runs your python code
+			if(error!=null){
+				console.log(error);
+			}
+			if(stdout!==null){
+				console.log(stdout);
+			}
+			if(stderr!==null){
+				console.log(stderr);
+			}
+		});
+
+		//var appWindow = 
+		gui.Window.open('login.html', // Starts your application
+			{
+				width: 1200,
+				height: 750,
+				position: 'center',
+				focus: false,
+				transparent: false // This hides the application window
+			},function(win){
+				win.on('loaded', function() { // Waits for application to be loaded
+					console.log("success");
+					currentWindow.close(true); // Closes loading.html
+					win.show();  // Shows app.html
+					win.focus(); // Set the focus on app.html
+				});
+			}
+		);
+		
+		
+		
+	</script>
+</html>

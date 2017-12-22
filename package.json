@@ -1,0 +1,14 @@
+{
+  "main": "loading.html",
+  "name": "App",
+  "window": {
+    "toolbar": true,
+    "frame": true,
+    "width": 1200,
+    "height": 750,
+    "resizable": false 
+  },
+    "webkit": {
+    "plugin": true
+  }
+}

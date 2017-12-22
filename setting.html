@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!--Import Google Icon Font-->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<!--Import materialize.css-->
+		<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+		<link type="text/css" rel="stylesheet" href="css/color.css" />
+		<link type="text/css" rel="stylesheet" href="css/custom.css" />
+		<link type="text/css" rel="stylesheet" href="css/preloader.css" />
+	<!--	<link type="text/css" rel="stylesheet" href="css/style.css" /> -->
+		<meta charset="UTF-8">
+		<!--Let browser know website is optimized for mobile-->
+	</head>
+	<body>
+		<header>
+			<nav class="navbar-color gradient-45deg-purple-deep-orange gradient-shadow">
+				<div class="nav-wrapper">
+					<ul class="left">
+						<li>
+							<a href="index.html">
+								<i class="material-icons left">sort</i>
+								首页
+							</a>
+						</li>
+						<li>
+							<a href="down.html">
+								<i class="material-icons left">cloud_download</i>
+								下载
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="material-icons left">settings</i>
+								设置
+							</a>
+						</li>
+						<li>
+							<a href="about.html">
+								<i class="material-icons left">help_outline</i>
+								关于
+							</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+		<div>
+			<div class="row">
+				<div class="col s6 offset-s1">
+					<div class="card gradient-45deg-light-blue-teal darken-1">
+						<div class="card-content black-text">
+							<span class="card-title">代理</span>
+							<form action="#">
+								<div class="row">
+									<div class="col">
+										<input name="proxySelect" type="radio" id="none" value="none">
+										<label for="none">不使用</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col s2" style="margin-top: 30px;">
+										<input name="proxySelect" type="radio" id="socks5" value="socks5h">
+										<label for="socks5">Socks5</label>
+									</div>
+									<div class="input-field col s4">
+										<input disabled id="portWithSocks" type="text" class="validate">
+										<label for="portWithSocks">端口号</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col s2" style="margin-top: 30px;">
+										<input name="proxySelect" type="radio" id="http" value="http">
+										<label for="http">Http</label>
+									</div>
+									<div class="input-field col s4">
+										<input disabled id="portWithHttp" type="text" class="validate">
+										<label for="portWithHttp">端口号</label>
+									</div>
+								</div>
+
+							</form>
+						</div>
+						<div class="card-action">
+							<a href="#" id="proxy-submit">确定</a>
+						</div>
+					</div>
+				</div>
+				<div class="col s4">
+					<div class="row">
+						<div class="col s12">
+							<div class="card-panel teal">
+							<span class="white-text">
+								注意！本软件自身不包含代理功能。
+								这里的代理设置只是让本软件可以通过用户电脑的代理。
+								原理与SwitchOmega一样。
+								国内部分地区无法访问P站，请另寻他法。
+							</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="fixed-action-btn horizontal" style="bottom: 50px; right: 19px;">
+				<a class="btn-floating btn-large gradient-45deg-purple-amber gradient-shadow tooltipped" id="logout" data-position="top" data-tooltip="退出登录">
+					<i class="material-icons">power_settings_new</i>
+				</a>
+			</div>
+			<div id="logoutC" class="modal">
+				<div class="modal-content">
+					<h4>确认退出</h4>
+					<p>退出登录后需要再次登录方可使用，如果下载队列中仍有图片没有下载就退出，图片将中断下载！</p>
+				</div>
+				<div class="modal-footer">
+					<a id="logoutT" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">确认</a>
+					<a id="logoutF" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">不了</a>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/materialize.min.js"></script>
+		<script type="text/javascript" src="js/jquery.tmpl.min.js"></script>
+	</body>
+	<script>
+		function loadSetting() {
+			$.ajax({
+				type: 'GET',
+				url: 'http://localhost:7493/setting',
+				contentType: "application/json",
+				dataType: 'json',
+				async: true,
+				success: function(msg){
+					console.log(msg); 
+					if(msg.ret){
+						data = msg.data;
+						if(data['type']=="none"){
+							$('#none').click();
+						}else if(data['type']=="socks5h"){
+							$('#socks5').click();
+							$('#portWithSocks').val(data['port']);
+						}else{
+							$('#http').click();
+							$('#portWithHttp').val(data['port']);
+						}
+					}else{
+						Materialize.toast('emmmm脸太黑加载不到配置文件...', 3000);
+					}
+				},
+				error: function(jqXHR, textStatus){
+					if(textStatus!==null){
+						console.log(textStatus);
+					}
+					Materialize.toast('网络错误，请检查内置服务器是否启动!', 3000);
+				},
+				complete: function(jqXHR,textStatus){
+				//	console.log('1');
+
+				}
+
+			});
+		}
+
+		function postSetting(typ, port) {
+			$.ajax({
+				type: 'POST',
+				url: 'http://localhost:7493/setting',
+				contentType: "application/json",
+				dataType: 'json',
+				async: true,
+				data: JSON.stringify({
+					'type': 'proxy',
+					'proxyType': typ, 
+					'port': port
+				}),
+				success: function(msg){
+					console.log(msg); 
+					if(msg.ret){
+						Materialize.toast('设置成功！重启后生效', 1500);
+					}else{
+						Materialize.toast('emmmm脸太黑设置失败...', 3000);
+					}
+				},
+				error: function(jqXHR, textStatus){
+					if(textStatus!==null){
+						console.log(textStatus);
+					}
+					Materialize.toast('网络错误，请检查内置服务器是否启动!', 3000);
+				},
+				complete: function(jqXHR,textStatus){
+				//	console.log('1');
+
+				}
+			});
+		}
+		$(document).ready(function(){
+			loadSetting();
+			$('.modal').modal({ dismissible: false });
+			$('.tooltipped').tooltip({delay: 30});
+			closeWin();
+		});
+		$("#socks5").click(function () {
+			$("#socks5").attr("checked", true);
+			$("#http").attr("checked", false);
+			$("#none").attr("checked", false);
+			$('#portWithSocks').attr('disabled', false);
+			$('#portWithHttp').attr('disabled', true);
+			$('#portWithSocks').focus();
+		});
+		$("#http").click(function () {
+			$("#socks5").attr("checked", false);
+			$("#http").attr("checked", true);
+			$("#none").attr("checked", false);
+			$('#portWithHttp').attr('disabled', false);
+			$('#portWithSocks').attr('disabled', true);
+			$('#portWithHttp').focus();
+		});
+		$("#none").click(function () {
+			$("#socks5").attr("checked", false);
+			$("#http").attr("checked", false);
+			$("#none").attr("checked", true);
+			$('#portWithHttp').attr('disabled', true);
+			$('#portWithSocks').attr('disabled', true);
+		});
+
+		$('#logout').click(function(){
+			$('#logoutC').modal('open');
+		})
+		$('#logoutF').click(function(){
+			$('#logoutC').modal('close');
+		})
+		$('#logoutT').click(function(){
+			$.ajax({
+				type: 'GET',
+				url: 'http://localhost:7493/logout',
+				contentType: "application/json",
+				dataType: 'json',
+				async: true,
+				success: function(msg){
+					console.log(msg); 
+					var gui = require("nw.gui");
+					var currentWindow = gui.Window.get();
+					currentWindow.close(false);
+				},
+				error: function(jqXHR, textStatus){
+					if(textStatus!==null){
+						console.log(textStatus);
+					}
+					Materialize.toast('退出失败。。', 3000);
+				}
+
+			});
+		})
+		$('#proxy-submit').click(function(){
+			if($('#none').attr("checked")){
+				postSetting($('#none').val(), "");
+			}else if($('#socks5').attr("checked")){
+				port = $('#portWithSocks').val();
+				if((port.replace(/(^\s*)|(\s*$)/g, "")) == ""){
+					$("#portWithSock").addClass("invalid");
+					return false;
+				}else{
+					if(port>0 && port <65535){
+						postSetting($('#http').val(), port);
+					}else{
+						$("#portWithSock").addClass("invalid");
+						return false;
+					}
+				}
+				
+			}else if($('#http').attr("checked")){
+				port = $('#portWithHttp').val();
+				if((port.replace(/(^\s*)|(\s*$)/g, "")) == ""){
+					$("#portWithHttp").addClass("invalid");
+					return false;
+				}else{
+					if(port>0 && port <65535){
+						postSetting($('#http').val(), port);
+					}else{
+						$("#portWithHttp").addClass("invalid");
+						return false;
+					}
+				}
+				
+			}else{
+				Materialize.toast('你倒是先选一个啊。。。', 3000);
+			}
+		});
+	function closeWin() {
+		var gui = require("nw.gui");
+		var currentWindow = gui.Window.get();
+		currentWindow.on('close', function() {
+			this.hide(); // Pretend to be closed already
+			console.log("We're closing...");
+			$.ajax({
+			type: 'GET',
+			url: 'http://localhost:7493/close',
+			contentType: "application/json",
+			dataType: 'json',
+			success: function(){		
+			},
+			error: function(jqXHR, textStatus){
+				if(textStatus!==null){
+					console.log(textStatus);
+				}
+			},
+			complete: function(jqXHR,textStatus){
+			//	console.log('1');
+				this.close(true);
+			}
+
+		});
+		//$("body").addClass("loaded");
+		this.close(true); // then close it forcely
+		});
+		
+	}			
+	</script>
+</html>

@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!--Import Google Icon Font-->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<!--Import materialize.css-->
+		<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+		<link type="text/css" rel="stylesheet" href="css/color.css" />
+		<link type="text/css" rel="stylesheet" href="css/custom.css" />
+		<link type="text/css" rel="stylesheet" href="css/preloader.css" />
+		<link type="text/css" rel="stylesheet" href="css/style.css" />
+		<meta charset="UTF-8">
+		<!--Let browser know website is optimized for mobile-->
+	</head>
+	<body>
+		<header>
+			<nav class="navbar-color gradient-45deg-purple-deep-orange gradient-shadow">
+				<div class="nav-wrapper">
+					<ul class="left">
+						<li>
+							<a href="#">
+								<i class="material-icons left">sort</i>
+								首页
+							</a>
+						</li>
+						<li>
+							<a href="down.html">
+								<i class="material-icons left">cloud_download</i>
+								下载
+							</a>
+						</li>
+						<li>
+							<a href="setting.html">
+								<i class="material-icons left">settings</i>
+								设置
+							</a>
+						</li>
+						<li>
+							<a href="about.html">
+								<i class="material-icons left">help_outline</i>
+								关于
+							</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+
+		<div>
+			<div class="row">
+				<div class="col m4">
+					<div id="filter">
+						<div class="section">
+							<h5>过滤器</h5>
+						</div>
+						<div class="divider"></div>
+						<ul class="collapsible" data-collapsible="accordion">
+							<li>
+								<div class="collapsible-header disabled">
+									<i class="material-icons">whatshot</i>
+									热榜
+								</div>
+								<div class="collapsible-body">
+									<form action="#">
+										<p>
+											<input name="hotFilter" type="radio" id="daily" value="daily">
+											<label for="daily">日</label>
+										</p>
+										<p>
+											<input name="hotFilter" type="radio" id="weekly" value="weekly">
+											<label for="weekly">周</label>
+										</p>
+										<p>
+											<input name="hotFilter" type="radio" id="monthly" value="monthly">
+											<label for="monthly">月</label>
+										</p>
+										<p>
+											<input name="hotFilter" type="radio" id="rookie" value="rookie">
+											<label for="rookie">新人</label>
+										</p>
+									</form>
+								</div>
+							</li>
+							<li>
+								<div class="collapsible-header">
+									<i class="material-icons">collections</i>
+									收藏
+								</div>
+								<div class="collapsible-body">
+									<p>
+										<input type="checkbox" id="myself" checked="checked" />
+										<label for="myself">使用当前账号</label>
+									</p>
+									<div class="input-field row">
+										<div class="col m10">
+											<i class="material-icons prefix">account_circle</i>
+											<input disabled id="userIdforcollection" type="text" class="validate">
+											<label for="userIdforcollection">用户ID</label>
+										</div>
+										<button class="btn-floating waves-effect waves-light red" type="submit" name="action" id="colloection-submit">
+											<i class="material-icons right">send</i>
+										</button>
+										<input type="hidden" id="userNow" >
+										<input type="hidden" id="userLogin" >
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="collapsible-header">
+									<i class="material-icons">supervisor_account</i>
+									用户
+								</div>
+								<div class="collapsible-body">
+									<div class="input-field row">
+										<div class="col m10">
+											<i class="material-icons prefix">account_circle</i>
+											<input id="userIdforpainter" type="text" class="validate">
+											<label for="userIdforpainter">用户ID</label>
+										</div>
+										<button class="btn-floating waves-effect waves-light red" type="submit" name="action" id="painter-submit">
+											<i class="material-icons right">send</i>
+										</button>
+									</div>
+								</div>
+							</li>
+							<!--
+							<li>
+								<div class="collapsible-header">
+									<i class="material-icons">search</i>
+									搜索
+								</div>
+								<div class="collapsible-body">
+									<div class="input-field row">
+										<div class="col m10">
+											<i class="material-icons prefix">account_circle</i>
+											<input id="userID" type="text" class="validate">
+											<label for="userID">用户ID</label>
+										</div>
+										<button class="btn-floating waves-effect waves-light red" type="submit" name="action">
+											<i class="material-icons right">send</i>
+										</button>
+									</div>                            
+								</div>
+							</li>
+							-->
+						</ul>
+					</div>
+				</div>
+
+				<div class="col m8">
+					<div id="loader-wrapper">
+						<div id="loader"></div>
+					<!--	<div class="loader-section section-left"></div>
+					<div class="loader-section section-right"></div> -->
+					</div>
+					<div class="row" id="imageMain">
+						<div id="imageFalls-0" class="col s4">
+							<ul id="hot-image-0">
+
+							</ul>
+						</div>
+						<div id="imageFalls-1" class="col s4">
+							<ul id="hot-image-1">
+							</ul>
+						</div>
+						<div id="imageFalls-2" class="col s4">
+							<ul id="hot-image-2">
+							</ul>
+						</div>
+						
+
+					</div>
+				</div>
+			</div>
+			<div class="fixed-action-btn horizontal" style="bottom: 50px; right: 19px;">
+				<input type="hidden" value="" id="modeNow">
+				<input type="hidden" value="" id="pageNow">
+				<input type="hidden" value="" id="dateNow">
+				<input type="hidden" value="" id="typeNow">
+				<a class="btn-floating btn-large gradient-45deg-purple-amber gradient-shadow tooltipped" id="downloadPage" data-position="top" data-tooltip="下载本页">
+					<i class="material-icons">done_all</i>
+				</a>
+				<ul id="operator-list">
+					<li>
+						<a id="toTop" class="btn-floating orange darken-4 tooltipped" data-position="top" data-tooltip="回到顶部" href="#">
+							<i class="material-icons">publish</i>
+						</a>
+					</li>
+				</ul>	
+			</div>
+			<div id="getUserIdFail" class="modal">
+				<div class="modal-content">
+					<h4>获取错误</h4>
+					<p>获取当前登录用户的PID失败，某些功能不能正常使用！</p>
+					<p>请检查网络连接无误后重新启动！</p>
+				</div>
+				<div class="modal-footer">
+					<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">你会不会的啊</a>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/materialize.min.js"></script>
+		<script type="text/javascript" src="js/jquery.tmpl.min.js"></script>
+	</body>
+	<script type="text/html" id="imagetmpl">
+		<li class="imageInfo m12">
+			<div class="card">
+				<div class="card-image">
+					<img src=${image_thumbnail_src}>
+				</div>
+				<ul class="card-action-buttons">
+					<li>
+						<a class="btn-floating waves-effect waves-light red btn-download"><i class="material-icons">arrow_downward</i></a>
+						<input type="hidden" name="imageFullSrc" value=${image_src}>
+						<input type="hidden" name="imageId" value=${illust_id}>
+					</li>
+				</ul>
+
+			</div>
+		</li>
+	</script>
+	<script type="text/html" id="nextDatetmpl">
+		<li class="operator">
+			<a id="nextDate" class="btn-floating green tooltipped" data-position="top" data-tooltip="后一天">
+				<i class="material-icons">arrow_back</i>
+			</a>
+			<input type="hidden" id="next_date" value=${next_date}>
+		</li>
+	</script>
+	<script type="text/html" id="prevDatetmpl">
+		<li class="operator">
+			<a id="prevDate" class="btn-floating blue tooltipped" data-position="top" data-tooltip="前一天">
+				<i class="material-icons">arrow_forward</i>
+			</a>
+			<input type="hidden" id="prev_date" value=${prev_date}>
+		</li>
+	</script>
+	<script type="text/html" id="prevPagetmpl">
+		<li class="operator">
+			<a id="prevPage" class="btn-floating red tooltipped" data-position="top" data-tooltip="上一页">
+				<i class="material-icons">keyboard_arrow_left</i>
+			</a>
+			<input type="hidden" id="prev_page" value=${prev_page}>
+		</li>
+	</script>
+	<script type="text/html" id="nextPagetmpl">
+		<li class="operator">
+			<a id="nextPage" class="btn-floating yellow darken-1 tooltipped" data-position="top" data-tooltip="下一页">
+				<i class="material-icons">keyboard_arrow_right</i>
+			</a>
+			<input type="hidden" id="next_page" value=${next_page}>
+		</li>
+	</script>
+	<script type="text/html" id="loadFailtmpl">
+		<div class="loadFail m12">
+			<div class="s12">
+				<div class="browser-window">
+					<div class="content">
+						<div class="row">
+							<div id="site-layout-example-top" class="col s12">
+								<p class="flat-text-logo center white-text caption-uppercase">非常抱歉，咱什么作品都没找到 :(</p>
+							</div>
+							<div id="site-layout-example-right" class="col s12 m12 l12">
+								<div class="row center">
+									<h1 class="text-long-shadow col s12 mt-3">Error</h1>
+									<p class="center white-text">试试别的？</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+	<script>
+		function loadHotSpotView(mode, date, page) {
+			//$(".imageInfo").remove();
+			//$(".loadFail").remove();
+			$("body").removeClass("loaded");
+			$('#downloadPage').addClass("disabled");
+			$('.tooltipped').tooltip('remove');
+			$.ajax({
+				type: 'POST',
+				url: 'http://localhost:7493/hot',
+				contentType: "application/json",
+				dataType: 'json',
+				data: JSON.stringify({
+					'mode': mode, 
+					'date': date, 
+					'page': page
+				}),
+				async: true,
+				success: function(msg){
+					console.log(msg); 
+					$(".imageInfo").remove();
+					$(".loadFail").remove();
+					$('.operator').remove();
+					$('#downloadPage').removeClass("disabled");
+					if(msg.ret){
+						var data = msg.data;
+						var operatorInfo = msg.operatorInfo;
+						res = splitDataSet(data, 3);
+						$('#modeNow')[0].value = operatorInfo.modeNow;
+						$('#pageNow')[0].value = operatorInfo.pageNow;
+						$('#dateNow')[0].value = operatorInfo.dateNow;
+						$('#typeNow')[0].value = "hotspot";
+						$('#imagetmpl').tmpl(res[0]).appendTo('#hot-image-0');
+						$('#imagetmpl').tmpl(res[1]).appendTo('#hot-image-1');
+						$('#imagetmpl').tmpl(res[2]).appendTo('#hot-image-2');
+					//	Materialize.showStaggeredList('#goods');
+						Materialize.fadeInImage('#hot-image-0');
+						Materialize.fadeInImage('#hot-image-1');
+						Materialize.fadeInImage('#hot-image-2');
+						if(operatorInfo.next_date != ""){
+							$('#nextDatetmpl').tmpl(operatorInfo).appendTo('#operator-list');
+						}
+						if(operatorInfo.prev_page != ""){
+							$('#prevPagetmpl').tmpl(operatorInfo).appendTo('#operator-list');
+						}
+						if(operatorInfo.next_page != ""){
+							$('#nextPagetmpl').tmpl(operatorInfo).appendTo('#operator-list');
+						}
+						if(operatorInfo.prev_date != ""){
+							$('#prevDatetmpl').tmpl(operatorInfo).appendTo('#operator-list');
+						}
+						prepareHotAction();
+					}else{
+						$('#loadFailtmpl').tmpl().appendTo('#imageMain');
+					}
+				},
+				error: function(jqXHR, textStatus){
+					$(".imageInfo").remove();
+					$(".loadFail").remove();
+					$('.operator').remove();
+					
+					if(textStatus!==null){
+						console.log(textStatus);
+					}
+					$('#loadFailtmpl').tmpl().appendTo('#imageMain');
+				},
+				complete: function(jqXHR,textStatus){
+				//	console.log('1');
+					$("body").addClass("loaded");
+					$('.tooltipped').tooltip({delay: 30});
+				}
+
+			});
+			//$("body").addClass("loaded");
+			return false;
+		}
+		function loadCollectionView(userId, page){
+			$("body").removeClass("loaded");
+			$('#downloadPage').addClass("disabled");
+			$('.tooltipped').tooltip('remove');
+			$.ajax({
+				type: 'POST',
+				url: 'http://localhost:7493/collections',
+				contentType: "application/json",
+				dataType: 'json',
+				data: JSON.stringify({
+					'userId': userId, 
+					'page': page
+				}),
+				async: true,
+				success: function(msg){
+					console.log(msg); 
+					$(".imageInfo").remove();
+					$(".loadFail").remove();
+					$('.operator').remove();
+					$('#downloadPage').removeClass("disabled");
+					if(msg.ret){
+						var data = msg.data;
+						var operatorInfo = msg.operatorInfo;
+						res = splitDataSet(data, 3);
+						$('#userNow')[0].value = msg.userNow;
+						$('#typeNow')[0].value = "collections";
+						//setCookiesWithCollections(msg.cookie)
+						$('#imagetmpl').tmpl(res[0]).appendTo('#hot-image-0');
+						$('#imagetmpl').tmpl(res[1]).appendTo('#hot-image-1');
+						$('#imagetmpl').tmpl(res[2]).appendTo('#hot-image-2');
+					//	Materialize.showStaggeredList('#goods');
+						Materialize.fadeInImage('#hot-image-0');
+						Materialize.fadeInImage('#hot-image-1');
+						Materialize.fadeInImage('#hot-image-2');
+						if(operatorInfo.prev_page != ""){
+							$('#prevPagetmpl').tmpl(operatorInfo).appendTo('#operator-list');
+						}
+						if(operatorInfo.next_page != ""){
+							$('#nextPagetmpl').tmpl(operatorInfo).appendTo('#operator-list');
+						}
+						prepareCollectionAction();
+					}else{
+						$('#loadFailtmpl').tmpl().appendTo('#imageMain');
+					}
+				},
+				error: function(jqXHR, textStatus){
+					$(".imageInfo").remove();
+					$(".loadFail").remove();
+					$('.operator').remove();
+					
+					if(textStatus!==null){
+						console.log(textStatus);
+					}
+					$('#loadFailtmpl').tmpl().appendTo('#imageMain');
+				},
+				complete: function(jqXHR,textStatus){
+				//	console.log('1');
+					$("body").addClass("loaded");
+					$('.tooltipped').tooltip({delay: 30});
+				}
+
+			});
+			//$("body").addClass("loaded");
+			return false;			
+		}
+
+		function loadPainterView(userId, page){		
+			$("body").removeClass("loaded");
+			$('#downloadPage').addClass("disabled");
+			$('.tooltipped').tooltip('remove');
+			$.ajax({
+				type: 'POST',
+				url: 'http://localhost:7493/painter',
+				contentType: "application/json",
+				dataType: 'json',
+				data: JSON.stringify({
+					'userId': userId, 
+					'page': page
+				}),
+				async: true,
+				success: function(msg){
+					console.log(msg); 
+					$(".imageInfo").remove();
+					$(".loadFail").remove();
+					$('.operator').remove();
+					$('#downloadPage').removeClass("disabled");
+					if(msg.ret){
+						var data = msg.data;
+						var operatorInfo = msg.operatorInfo;
+						res = splitDataSet(data, 3);
+						$('#userNow')[0].value = msg.userNow;
+						$('#typeNow')[0].value = "painter";
+						//setCookiesWithCollections(msg.cookie)
+						$('#imagetmpl').tmpl(res[0]).appendTo('#hot-image-0');
+						$('#imagetmpl').tmpl(res[1]).appendTo('#hot-image-1');
+						$('#imagetmpl').tmpl(res[2]).appendTo('#hot-image-2');
+					//	Materialize.showStaggeredList('#goods');
+						Materialize.fadeInImage('#hot-image-0');
+						Materialize.fadeInImage('#hot-image-1');
+						Materialize.fadeInImage('#hot-image-2');
+						if(operatorInfo.prev_page != ""){
+							$('#prevPagetmpl').tmpl(operatorInfo).appendTo('#operator-list');
+						}
+						if(operatorInfo.next_page != ""){
+							$('#nextPagetmpl').tmpl(operatorInfo).appendTo('#operator-list');
+						}
+						preparePainterAction();
+					}else{
+						$('#loadFailtmpl').tmpl().appendTo('#imageMain');
+					}
+				},
+				error: function(jqXHR, textStatus){
+					$(".imageInfo").remove();
+					$(".loadFail").remove();
+					$('.operator').remove();
+					
+					if(textStatus!==null){
+						console.log(textStatus);
+					}
+					$('#loadFailtmpl').tmpl().appendTo('#imageMain');
+				},
+				complete: function(jqXHR,textStatus){
+				//	console.log('1');
+					$("body").addClass("loaded");
+					$('.tooltipped').tooltip({delay: 30});
+				}
+
+			});
+			//$("body").addClass("loaded");
+			return false;			
+		}
+
+
+		function splitDataSet(data, block) {
+			var data_len = data.length;
+			len = data_len/block;
+			var result = [];
+			for(var i=0;i<data_len;i+=len){
+				result.push(data.slice(i,i+len));
+			}
+			return result;
+		}
+		function prepareHotAction() {
+			$('.tooltipped').tooltip({delay: 30});
+			$("#nextDate").click(function(){
+				loadHotSpotView($('#modeNow').val(), $('#next_date').val(), "1");
+			});
+			$("#prevDate").click(function(){
+				loadHotSpotView($('#modeNow').val(), $('#prev_date').val(), "1");
+			});
+			$("#nextPage").click(function(){
+				loadHotSpotView($('#modeNow').val(), $('#dateNow').val(), $('#next_page').val());
+			});
+			$("#prevPage").click(function(){
+				loadHotSpotView($('#modeNow').val(), $('#dateNow').val(), $('#prev_page').val());
+			});
+			prepareBtnDownload();
+		}
+
+		function prepareCollectionAction() {
+			$('.tooltipped').tooltip({delay: 30});
+			$("#nextPage").click(function(){
+				loadCollectionView($('#userNow').val(), $('#next_page').val());
+			});
+			$("#prevPage").click(function(){
+				loadCollectionView($('#userNow').val(), $('#prev_page').val());
+			});
+			prepareBtnDownload();	
+		}
+
+		function preparePainterAction(){
+			$('.tooltipped').tooltip({delay: 30});
+			$("#nextPage").click(function(){
+				loadCollectionView($('#userNow').val(), $('#next_page').val());
+			});
+			$("#prevPage").click(function(){
+				loadCollectionView($('#userNow').val(), $('#prev_page').val());
+			});
+			prepareBtnDownload();			
+		}
+		function getMyUserId() { 
+			$.ajax({
+				type: 'GET',
+				url: 'http://localhost:7493/user',
+				contentType: "application/json",
+				dataType: 'json',
+				async: true,
+				success: function(msg){
+					console.log(msg); 
+					if(msg.ret){
+						$("#userLogin")[0].value = msg.userId;
+						Materialize.toast('获取用户ID成功', 700);
+					}else{
+						$('#getUserIdFail').modal('open');
+					}
+				},
+				error: function(jqXHR, textStatus){			
+					if(textStatus!==null){
+						console.log(textStatus);
+					}
+					$('#getUserIdFail').modal('open');
+				}
+
+			});
+			//$("body").addClass("loaded");
+			return false;	
+		}
+		function prepareBtnDownload() {
+			$(".btn-download").click(function(){
+				src = $(this).next().val();
+				id = $(this).next().next().val();
+				typeNow = $('#typeNow')[0].value;
+				extra = {};
+				if(typeNow=="hotspot"){
+					extra = { 
+						"type": typeNow,
+						"mode": $('#modeNow')[0].value,
+						"date": $('#dateNow')[0].value
+					};
+				}else{
+					extra = {
+						"type": typeNow,
+						"user": $('#userNow')[0].value
+					};
+				}
+				data = [ {
+					"image_src": src, 
+					"illust_id": id,
+					"extra": extra
+				}];
+				console.log(data);
+				postDownload(data);	
+			});	
+		}
+
+		function postDownload(data) {
+			$.ajax({
+				type: 'POST',
+				url: 'http://localhost:7493/download',
+				contentType: "application/json",
+				dataType: 'json',
+				data: JSON.stringify({
+					'data': data, 
+				}),
+				async: true,
+				success: function(msg){
+					console.log(msg);
+					Materialize.toast('已添加到下载队列', 700);
+				},
+				error: function(jqXHR,textStatus){
+					if(textStatus!=null){
+						console.log(textStatus);
+					}
+					Materialize.toast('添加到下载队列失败', 1000);
+				}
+			});	
+		}
+
+		Date.prototype.Format = function (fmt) { 
+			var o = {  
+				"M+": this.getMonth() + 1,  
+				"d+": this.getDate(),  
+				"H+": this.getHours(), 
+				"m+": this.getMinutes(),  
+				"s+": this.getSeconds(),   
+				"q+": Math.floor((this.getMonth() + 3) / 3),  
+				"S": this.getMilliseconds()  
+				};  
+			if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));  
+			for (var k in o)  
+				if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));  
+			return fmt;  
+		}
+
+		$(document).ready(function(){
+			//$('.collapsible').collapsible('open', 2);
+			//$('.collapsible').collapsible('open', 1);
+			$('.collapsible').collapsible('open', 0);
+			$('.modal').modal({ dismissible: false });
+			//$('.collapsible').collapsible('destroy');
+			getMyUserId()
+			$('#daily').click();
+			$('.tooltipped').tooltip({delay: 30});
+			closeWin();
+			//loadHotSpotView("daily", "20171212", "1");
+		});
+		$("#downloadPage").click(function(){
+			//dataSet = $(".btn-download")
+			postData = new Array();
+			typeNow = $('#typeNow')[0].value;
+			extra = {};
+			if(typeNow=="hotspot"){
+				extra = { 
+					"type": typeNow,
+					"mode": $('#modeNow')[0].value,
+					"date": $('#dateNow')[0].value
+				};
+			}else{
+				extra = {
+					"type": typeNow,
+					"user": $('#userNow')[0].value
+				};
+			}
+			$(".btn-download").each(function(){
+				src = $(this).next().val();
+				id = $(this).next().next().val();
+				data =  {
+					"image_src": src, 
+					"illust_id": id,
+					"extra": extra
+				};	
+				postData.push(data);
+			});
+			postDownload(postData);
+			//loadHotSpotView("daily", "20171212", "1");
+		});
+		
+		$('input[name="hotFilter"]').click(function(){
+			var yesterday_milliseconds=new Date().getTime()-1000*60*60*24;
+			var date = new Date();
+			date.setTime(yesterday_milliseconds);
+			loadHotSpotView($(this).val(), date.Format("yyyyMMdd"), "1");
+		});
+		$("#myself").change(function(){
+			if(this.checked==true){
+				$("#userIdforcollection").val("");
+
+				$("#userIdforcollection").attr("disabled",true);
+				Materialize.updateTextFields();
+			}else{
+				$("#userIdforcollection").attr("disabled",false);
+			}
+		});
+		$("#colloection-submit").click(function(){
+			if($("#myself")[0].checked==true){
+				loadCollectionView($("#userLogin").val(), "1");
+			}else{
+				userIdforcollection = $('#userIdforcollection').val();
+				if((userIdforcollection.replace(/(^\s*)|(\s*$)/g, "")) == ""){
+					$("#userIdforcollection").addClass("invalid");
+					return false;
+				}else{
+					loadCollectionView($("#userIdforcollection").val(), "1");
+				}
+				
+			}
+		});
+		$("#painter-submit").click(function(){
+			userIdforpainter = $('#userIdforpainter').val();
+				if((userIdforpainter.replace(/(^\s*)|(\s*$)/g, "")) == ""){
+					$("#userIdforpainter").addClass("invalid");
+					return false;
+				}else{
+					loadPainterView($("#userIdforpainter").val(), "1");
+				}			
+		});
+
+
+		function setCookiesWithCollections(cookieData) {
+			var gui = require("nw.gui");
+			var currentWindow = gui.Window.get();
+			for (var i = 0; i <=cookieData.length - 1 ; i++) {
+				currentWindow.cookies.set(cookieData[i]);
+			}
+			//currentWindow.cookies.set(cookieData);
+		}
+
+		function closeWin() {
+			var gui = require("nw.gui");
+			var currentWindow = gui.Window.get();
+			currentWindow.on('close', function() {
+				this.hide(); // Pretend to be closed already
+				console.log("We're closing...");
+				$.ajax({
+				type: 'GET',
+				url: 'http://localhost:7493/close',
+				contentType: "application/json",
+				dataType: 'json',
+				success: function(){		
+				},
+				error: function(jqXHR, textStatus){
+					if(textStatus!==null){
+						console.log(textStatus);
+					}
+				},
+				complete: function(jqXHR,textStatus){
+				//	console.log('1');
+					this.close(true);
+				}
+
+			});
+			//$("body").addClass("loaded");
+			this.close(true); // then close it forcely
+			});
+			
+		}
+
+
+
+	
+
+
+	</script>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!--Import Google Icon Font-->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<!--Import materialize.css-->
+		<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+		<link type="text/css" rel="stylesheet" href="css/color.css" />
+		<link type="text/css" rel="stylesheet" href="css/custom.css" />
+		<link type="text/css" rel="stylesheet" href="css/preloader.css" />
+	<!--	<link type="text/css" rel="stylesheet" href="css/style.css" /> -->
+		<meta charset="UTF-8">
+		
+		<style type="text/css">
+		html, body, .block {
+			height: 100%;
+		}
+
+		.pin-top {
+			position: relative;
+		}
+
+
+		.pin-bottom {
+			position: relative;
+		}
+
+		.pinned {
+			position: fixed !important;
+		}
+		</style>
+	</head>
+	<body>
+		<div id="blue" class="block blue">
+			<nav class="pushpin-demo-nav pinned" data-target="blue" style="top: 0px;">
+				<div class="nav-wrapper light-blue">
+					<div class="container">
+						<a href="#" class="brand-logo">使用姿势</a>
+						<ul id="nav-mobile" class="right hide-on-med-and-down">
+							<li><a href="index.html">首页</a></li>
+							<li><a href="down.html">下载</a></li>
+							<li><a href="setting.html">设置</a></li>
+						</ul>
+					</div>
+				</div>
+				
+			</nav>
+			<div class="row" style="margin-top:15px;">
+				<div class="col s4">
+					<div class="col s12">
+						<div class="card orange lighten-1" style="position: inherit;">
+							<div class="card-content white-text">
+								<span class="card-title">Q：怎么使用？</span>
+								<p>A：首页有热点，收藏，画师三个栏目，对应P站的热图，用户的收藏，和画师的投稿。</p>
+								<p>热点可以按日/周/月进行获取，默认获取最近的一天。</p>
+								<p>收藏与画师投稿只需要输入对应的PID就能获取，收藏默认是使用当前登录账号的收藏。</p>
+							</div>
+		
+						</div>
+					</div>
+					<div class="col s12">
+						<div class="card  orange " style="position: inherit;">
+							<div class="card-content white-text">
+								<span class="card-title">Q：这个软件的配色我不喜欢，能改吗?</span>
+								<p>A：不能。</p>
+							</div>
+						</div>
+					</div>
+					<div class="col s12">
+						<div class="card orange darken-1" style="position: inherit;">
+							<div class="card-content white-text">
+								<span class="card-title">Q：为什么没有搜图功能？</span>
+								<p>A：太麻烦不想做。</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col s4">
+					<div class="col s12">
+						<div class="card deep-purple darken-2" style="position: inherit;">
+							<div class="card-content white-text">
+								<span class="card-title">Q：为什么热点的图很清晰，收藏和画师的图跟打了码一样？</span>
+								<p>A：由于Pixiv限制，收藏与画师的图片预览需要添加浏览器cookie才能正常获取。</p>
+								<p>而nw.js关于浏览器cookie的文档对这部分一笔带过，在尝试了几种方式后未果。</p>
+								<p>故收藏与画师的预览图采用了爬虫抓取后转为Base64再返回的形式。</p>
+								<p>而预览图图片被压缩为150*150能显示得清晰的样式。</p>
+								<p>放到这里就变得模糊了。</p>
+							</div>
+		
+						</div>
+					</div>
+					<div class="col s12">
+						<div class="card deep-purple darken-3" style="position: inherit;">
+							<div class="card-content white-text">
+								<span class="card-title">Q：在这里登录账号会被盗号吗？</span>
+								<p>A：。。。</p>
+							</div>
+						</div>
+					</div>
+					<div class="col s12">
+						<div class="card orange accent-4" style="position: inherit;">
+							<div class="card-content white-text">
+								<span class="card-title">Q：下载队列里还有图片的时候退出会怎么样？</span>
+								<p>A：一般不会怎么样，就停止下载了而已。不过你可以试试。</p>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="col s4">
+
+					<div class="col s12">
+						<div class="card pink lighten-2" style="position: inherit;">
+							<div class="card-content white-text">
+								<span class="card-title">Q：为什么热点的图加载很快，收藏和画师的图加载很慢？</span>
+								<p>A：理由同左。</p>
+								<p>时间耗费都在Base64的转码上。</p>
+								<p>如果你有更好的解决方案且愿意分享，欢迎联系我。</p>
+								<p>联系方式见关于作者。</p>
+							</div>
+		
+						</div>
+					</div>
+					<div class="col s12">
+						<div class="card pink" style="position: inherit;">
+							<div class="card-content white-text">
+								<span class="card-title">Q：为什么我获取热点获取到了前天的热点？</span>
+								<p>A：大陆地区在中午12点左右（具体时间未了解）才会更新昨天的热点图片，故早上是获取不到昨天的热点的。</p>
+								<p>所以一般只能获取到前天的热点，如果一直获取不到请傍晚再尝试。</p>
+								<p>如果持续获取不到说明Pixiv没有更新这一天的热点图片。（虽然这基本上不会发生）</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+
+		</div>
+		<div id="red" class="block red lighten-1">
+			<nav class="pushpin-demo-nav pin-top" data-target="red" style="top: 0px;">
+				<div class="nav-wrapper red">
+					<div class="container">
+						<a href="#" class="brand-logo">开源信息</a>
+						<ul id="nav-mobile" class="right hide-on-med-and-down">
+							<li><a href="index.html">首页</a></li>
+							<li><a href="down.html">下载</a></li>
+							<li><a href="setting.html">设置</a></li>
+						</ul>
+					</div>
+				</div>
+				
+			</nav>
+			<!-- style="margin-top:15px;" -->
+			<div class="row" style="margin-top:15px;" >
+				<div class="col s6">
+					<div class="card red lighten-1" style="position: inherit;">
+						<div class="card-content white-text">
+							<span class="card-title"><a  class="white-text extraLink" href="#!" data-href="http://materializecss.com">MaterializeCSS</a></span>
+							<div class="row">
+								<p>MIT license</p>
+								<p>A modern responsive front-end framework based on Material Design</p>
+							</div>
+						</div>
+					</div>
+					<div class="card red lighten-1" style="position: inherit;">
+						<div class="card-content white-text">
+							<span class="card-title"><p><a class="white-text extraLink" href="#!" data-href="https://nwjs.io/">NW.js</a></p></span>
+							<div class="row">
+								<p>MIT license</p>
+								<p>NW.js lets you call all Node.js modules directly from DOM and enables a new way of writing applications with all Web technologies. It was previously known as “node-webkit” project.</p>
+							</div>
+						</div>
+					</div>
+					<div class="card red lighten-1" style="position: inherit;">
+						<div class="card-content white-text">
+							<span class="card-title"><a  class="white-text extraLink" href="#!" data-href="http://www.tornadoweb.org/en/stable/">Tornado</a></span>
+							<div class="row">
+								<p>Apache Licence 2.0</p>
+								<p>Tornado is a Python web framework and asynchronous networking library, originally developed at FriendFeed.</p>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<div class="col s6">
+
+					<div class="card red lighten-1" style="position: inherit;">
+						<div class="card-content white-text">
+							<span class="card-title"><a  class="white-text extraLink" href="#!" data-href="https://github.com/requests/requests">requests</a></span>
+							<div class="row">
+								<p>Apache Licence 2.0</p>
+								<p>Requests is the only Non-GMO HTTP library for Python, safe for human consumption.</p>
+							</div>
+						</div>
+					</div>
+					<div class="card red lighten-1" style="position: inherit;">
+						<div class="card-content white-text">
+							<span class="card-title"><a  class="white-text extraLink" href="#!" data-href="https://www.crummy.com/software/BeautifulSoup/">BeautifulSoup4</a></span>
+							<div class="row">
+								<p>Apache Licence 2.0</p>
+								<p>You didn't write that awful page. You're just trying to get some data out of it. Beautiful Soup is here to help. Since 2004, it's been saving programmers hours or days of work on quick-turnaround screen scraping projects.</p>
+							</div>
+						</div>
+					</div>
+					<div class="card red lighten-1" style="position: inherit;">
+						<div class="card-content white-text">
+							<span class="card-title"><a  class="white-text extraLink" href="#!" data-href="https://github.com/Anorov/PySocks">PySocks</a></span>
+							<div class="row">
+								<p>Apache Licence 2.0</p>
+								<p>PySocks lets you send traffic through SOCKS and HTTP proxy servers. It is a modern fork of SocksiPy with bug fixes and extra features.</p>
+							</div>
+						</div>
+					</div>				
+				</div>			
+			</div>
+		</div>
+		<div id="green" class="block green lighten-1">
+			<nav class="pushpin-demo-nav pin-top" data-target="green" style="top: 0px;">
+				<div class="nav-wrapper green">
+					<div class="container">
+						<a href="#" class="brand-logo">关于</a>
+						<ul id="nav-mobile" class="right hide-on-med-and-down">
+							<li><a href="index.html">首页</a></li>
+							<li><a href="down.html">下载</a></li>
+							<li><a href="setting.html">设置</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+			<div class="row">
+
+				<div class="col s8 offset-s2">
+					<div class="row">
+						<div class="col s12">
+							<div class="card red lighten-1" style="position: inherit;">
+								<div class="card-content white-text">
+									<span class="card-title">关于PixivCrawler</span>
+									<div class="row">
+										<p>这个软件是一时兴起想要把自己P站的收藏都下载下来，然后想了想不如就顺便做个爬虫吧。</p>
+										<p>既然都做成爬虫了不如就顺便做个界面吧。</p>
+										<p>然后就各种逛Github，没发现有人做这东西，就开工了。</p>
+										<p>先是找找Win下面有什么Python的可以做出我想要的效果的库</p>
+										<p>PyQT做出来自己都看不下去，CEFPython用不好，最后就决定用了这个NW.js+Tornado的这种HybirdApp的方式</p>
+										<p>耗时6天，效果还过得去，途中遇到各种坑，最终还是完成了。</p>
+									</div>
+								</div>
+							</div>
+						</div>						
+						<div class="col s12">
+							<div class="card red lighten-1" style="position: inherit;">
+								<div class="card-content white-text">
+									<span class="card-title">关于我</span>
+									<div class="row">
+										<p>一个挣扎中的人</p>
+										<p>某非著名高校CS专业在读大三狗，沉迷游戏不能自拔。</p>
+									</div>
+									<span class="card-title">联系方式</span>
+									<div class="row">
+										<p><a class="white-text extraLink" href="#!" data-href="https://delitto.top">Blog</a></p>
+										<p><a class="white-text extraLink" href="#!" data-href="https://telegram.me/Delitt0">Telegram</a></p>
+										<p><a class="white-text extraLink" href="#!" data-href="https://github.com/Punizione">Github</a></p>
+										<p>如果有什么问题或者建议欢迎给我发Issue，如果觉得这个东西对你有用的话可以给我点个Star</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/materialize.min.js"></script>
+		<script type="text/javascript" src="js/jquery.tmpl.min.js"></script>
+	</body>
+	<script>
+		$('.pushpin-demo-nav').each(function() {
+			var $this = $(this);
+			var $target = $('#' + $(this).attr('data-target'));
+			$this.pushpin({
+				top: $target.offset().top,
+				bottom: $target.offset().top + $target.outerHeight() - $this.height()
+			});
+		});
+		$(document).ready(function(){
+			$('.target').pushpin({
+				top: 0,
+				bottom: 1000,
+				offset: 0
+			});
+			closeWin();
+		});
+		$('.extraLink').click(function() {
+			var gui = require('nw.gui');
+			gui.Shell.openExternal($(this).attr('data-href'));
+			
+		});
+		function closeWin() {
+			var gui = require("nw.gui");
+			var currentWindow = gui.Window.get();
+			currentWindow.on('close', function() {
+				this.hide(); // Pretend to be closed already
+				console.log("We're closing...");
+				$.ajax({
+				type: 'GET',
+				url: 'http://localhost:7493/close',
+				contentType: "application/json",
+				dataType: 'json',
+				success: function(){		
+				},
+				error: function(jqXHR, textStatus){
+					if(textStatus!==null){
+						console.log(textStatus);
+					}
+				},
+				complete: function(jqXHR,textStatus){
+				//	console.log('1');
+					this.close(true);
+				}
+
+			});
+			//$("body").addClass("loaded");
+			this.close(true); // then close it forcely
+			});
+			
+		}
+	</script>
+</html>

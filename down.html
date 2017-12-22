@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!--Import Google Icon Font-->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<!--Import materialize.css-->
+		<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+		<link type="text/css" rel="stylesheet" href="css/color.css" />
+		<link type="text/css" rel="stylesheet" href="css/custom.css" />
+		<link type="text/css" rel="stylesheet" href="css/preloader.css" />
+		<link type="text/css" rel="stylesheet" href="css/style.css" />
+		<meta charset="UTF-8">
+		<!--Let browser know website is optimized for mobile-->
+	</head>
+	<body>
+		<header>
+			<nav class="navbar-color gradient-45deg-purple-deep-orange gradient-shadow">
+				<div class="nav-wrapper">
+					<ul class="left">
+						<li>
+							<a href="index.html">
+								<i class="material-icons left">sort</i>
+								首页
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="material-icons left">cloud_download</i>
+								下载
+							</a>
+						</li>
+						<li>
+							<a href="setting.html">
+								<i class="material-icons left">settings</i>
+								设置
+							</a>
+						</li>
+						<li>
+							<a href="about.html">
+								<i class="material-icons left">help_outline</i>
+								关于
+							</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+		<div class="row">
+
+			<div class="col s12" >
+				<div class="progress" id="preload">
+					<div class="indeterminate"></div>
+				</div>
+				<div id="mainFrame">
+					<ul class="collection" id="items">
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/materialize.min.js"></script>
+		<script type="text/javascript" src="js/jquery.tmpl.min.js"></script>
+	</body>
+	<script type="text/html" id="itemtmpl">
+		<li class="collection-item">
+			${illust_id}
+		</li>
+	</script>
+
+	<script type="text/html" id="failtmpl">
+		<div class="loadFail m12">
+			<div class="s12">
+				<div class="browser-window">
+					<div class="content">
+						<div class="row">
+							<div id="site-layout-example-top" class="col s12">
+								<p class="flat-text-logo center white-text caption-uppercase">非常抱歉，获取下载队列失败了:(</p>
+							</div>
+							<div id="site-layout-example-right" class="col s12 m12 l12">
+								<div class="row center">
+									<h1 class="text-long-shadow col s12 mt-3">Error</h1>
+									<p class="center white-text">或许是网络原因(ε=ε=ε=┏(゜ロ゜;)┛</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+	<script type="text/html" id="emptytmpl">
+		<div class="loadEmpty m12">
+			<div class="s12">
+				<div class="browser-window">
+					<div class="content">
+						<div class="row">
+							<div id="site-layout-example-top" class="col s12">
+								<p class="flat-text-logo center white-text caption-uppercase">当前没有图片等待下载中...</p>
+							</div>
+							<div id="site-layout-example-right" class="col s12 m12 l12">
+								<div class="row center">
+									<img src="data:image/jpg;base64,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" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+	<script>
+		$(document).ready(function(){
+			loadDownloadlist();
+			setInterval(loadDownloadlist, 2000);
+			closeWin();
+		});
+
+		function loadDownloadlist() {
+			$.ajax({
+				type: 'GET',
+				url: 'http://localhost:7493/download',
+				contentType: "application/json",
+				dataType: 'json',
+				async: true,
+				success: function(msg){
+					console.log(msg.data);
+					$('.loadFail').remove();
+					$('.loadEmpty').remove();
+					$('.collection-item').remove();
+					$('#preload').removeAttr("style");
+					if(msg.ret){
+						if(msg.data.length!=0){
+							$('#itemtmpl').tmpl(msg.data).appendTo('#items');
+							//Materialize.showStaggeredList('#items');
+						}
+						else{
+							$('#emptytmpl').tmpl().appendTo('#mainFrame');
+							$('#preload').attr("style","display:none;");
+						}
+					}else{
+						$('#preload').attr("style","display:none;");
+						
+						$('#failtmpl').tmpl().appendTo('#mainFrame');
+					}
+				},
+				error: function(jqXHR,textStatus){
+					$('.loadFail').remove();
+					$('.loadEmpty').remove();
+					$('.collection-item').remove();
+					$('#failtmpl').tmpl().appendTo('#mainFrame');
+					//$('#emptytmpl').tmpl().appendTo('#mainFrame');
+					$('#preload').attr("style","display:none;");
+				}
+			});				
+		}
+		function closeWin() {
+			var gui = require("nw.gui");
+			var currentWindow = gui.Window.get();
+			currentWindow.on('close', function() {
+				this.hide(); // Pretend to be closed already
+				console.log("We're closing...");
+				$.ajax({
+				type: 'GET',
+				url: 'http://localhost:7493/close',
+				contentType: "application/json",
+				dataType: 'json',
+				success: function(){		
+				},
+				error: function(jqXHR, textStatus){
+					if(textStatus!==null){
+						console.log(textStatus);
+					}
+				},
+				complete: function(jqXHR,textStatus){
+				//	console.log('1');
+					this.close(true);
+				}
+
+			});
+			//$("body").addClass("loaded");
+			this.close(true); // then close it forcely
+			});
+			
+		}
+	</script>
+</html>
