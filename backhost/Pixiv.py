@@ -20,9 +20,6 @@ import PageParser as PP
 
 
 
-def main():
-	getHotSpotView('daily', '20171220', '1')
-
 def getHotSpotView(mode, date, page):
 	s = account.getSession()
 	content = 'illust'
@@ -172,4 +169,4 @@ def getDownloadList():
 
 
 if __name__ == '__main__':
-	main()
+	print("Pixiv")

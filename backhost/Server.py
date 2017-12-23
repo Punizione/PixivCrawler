@@ -125,7 +125,7 @@ class DownloadHandler(tornado.web.RequestHandler):
 
 class SettingHandler(tornado.web.RequestHandler):
 	def post(self, *args, **kwargs):
-		data = tornado.escape.json_decode(self.request.body)
+		data = json.loads(self.request.body)
 		typ = data['type']
 		self.set_header('Content-Type', 'application/json; charset=UTF-8')
 		if typ=="proxy":
@@ -133,14 +133,22 @@ class SettingHandler(tornado.web.RequestHandler):
 				CM.saveProxy({ 'type': data['proxyType'], 'port':data['port'] })
 			else:
 				CM.saveProxy()
+			account.accountSession.proxies = CM.getProxy()
+			self.write(json.dumps( {"ret": True } ))
 		else:
-			print("todo")
-		self.write(json.dumps( {"ret": True } ))
+
+			if CM.hasPath(data['path']):
+				CM.savePath(data['path'])
+				self.write(json.dumps( {"ret": True } ))
+			else:
+				self.write(json.dumps( {"ret": False } ))
+		#self.write(json.dumps( {"ret": True } ))
 
 	def get(self):
 		self.set_header('Content-Type', 'application/json; charset=UTF-8')
-		data = CM.getProxySetting()
-		self.write(json.dumps({"ret": True, "data":data }))
+		proxyData = CM.getProxySetting()
+		pathData = CM.getPath()
+		self.write(json.dumps({"ret": True, "proxyData":proxyData, "pathData":pathData }))
 
 
 class LogoutHandler(tornado.web.RequestHandler):

@@ -27,7 +27,7 @@
 		var currentWindow = gui.Window.get(); // Get reference to loading.html
 
 		var exec = require('child_process');
-		exec.exec('Server.exe', {cwd:'./dist/Server/'}, function (error, stdout, stderr){ // Runs your python code
+		exec.exec('Server.exe', {cwd:'./Server/'}, function (error, stdout, stderr){ // Runs your python code
 			if(error!=null){
 				console.log(error);
 			}
@@ -42,6 +42,7 @@
 		//var appWindow = 
 		gui.Window.open('login.html', // Starts your application
 			{
+				resizable: false,
 				width: 1200,
 				height: 750,
 				position: 'center',

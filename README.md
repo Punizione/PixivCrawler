@@ -10,6 +10,11 @@ see [NW.js Documentation](http://docs.nwjs.io/en/latest/For%20Users/Getting%20St
 
 ![example](1.gif)
 
+# ToDo
+
+- 寻找收藏与画师页面预览图地更好解决方案
+- R18图片
+- VIP用户的搜索功能
 
 # Thanks
 

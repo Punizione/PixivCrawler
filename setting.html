@@ -47,6 +47,7 @@
 		</header>
 		<div>
 			<div class="row">
+
 				<div class="col s6 offset-s1">
 					<div class="card gradient-45deg-light-blue-teal darken-1">
 						<div class="card-content black-text">
@@ -100,6 +101,30 @@
 						</div>
 					</div>
 				</div>
+				<div class="col s6 offset-s1">
+					<div class="card gradient-45deg-light-blue-teal darken-1">
+						<div class="card-content black-text">
+							<span class="card-title">图片保存位置</span>
+							<form action="#">
+								<input type="text" id="path">
+							</form>
+						</div>
+						<div class="card-action">
+							<a href="#" id="path-submit">确定</a>
+						</div>
+					</div>
+				</div>
+				<div class="col s4">
+					<div class="row">
+						<div class="col s12">
+							<div class="card-panel teal">
+								<span class="white-text">
+									为了防止出现编码问题，请尽量不要使用中文路径。
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="fixed-action-btn horizontal" style="bottom: 50px; right: 19px;">
 				<a class="btn-floating btn-large gradient-45deg-purple-amber gradient-shadow tooltipped" id="logout" data-position="top" data-tooltip="退出登录">
@@ -132,16 +157,18 @@
 				success: function(msg){
 					console.log(msg); 
 					if(msg.ret){
-						data = msg.data;
-						if(data['type']=="none"){
+						proxyData = msg.proxyData;
+						if(proxyData['type']=="none"){
 							$('#none').click();
-						}else if(data['type']=="socks5h"){
+						}else if(proxyData['type']=="socks5h"){
 							$('#socks5').click();
-							$('#portWithSocks').val(data['port']);
+							$('#portWithSocks').val(proxyData['port']);
 						}else{
 							$('#http').click();
-							$('#portWithHttp').val(data['port']);
+							$('#portWithHttp').val(proxyData['port']);
 						}
+						pathData = msg.pathData;
+						$('#path').val(pathData);
 					}else{
 						Materialize.toast('emmmm脸太黑加载不到配置文件...', 3000);
 					}
@@ -160,7 +187,7 @@
 			});
 		}
 
-		function postSetting(typ, port) {
+		function proxySetting(typ, port) {
 			$.ajax({
 				type: 'POST',
 				url: 'http://localhost:7493/setting',
@@ -175,9 +202,41 @@
 				success: function(msg){
 					console.log(msg); 
 					if(msg.ret){
-						Materialize.toast('设置成功！重启后生效', 1500);
+						Materialize.toast('设置成功！', 1500);
 					}else{
 						Materialize.toast('emmmm脸太黑设置失败...', 3000);
+					}
+				},
+				error: function(jqXHR, textStatus){
+					if(textStatus!==null){
+						console.log(textStatus);
+					}
+					Materialize.toast('网络错误，请检查内置服务器是否启动!', 3000);
+				},
+				complete: function(jqXHR,textStatus){
+				//	console.log('1');
+
+				}
+			});
+		}
+
+		function pathSetting(path) {
+			$.ajax({
+				type: 'POST',
+				url: 'http://localhost:7493/setting',
+				contentType: "application/json",
+				dataType: 'json',
+				async: true,
+				data: JSON.stringify({
+					'type': 'path',
+					'path': path
+				}),
+				success: function(msg){
+					console.log(msg); 
+					if(msg.ret){
+						Materialize.toast('设置成功！', 1500);
+					}else{
+						Materialize.toast('路径设置失败！请确认该路径是否合法', 3000);
 					}
 				},
 				error: function(jqXHR, textStatus){
@@ -252,7 +311,7 @@
 		})
 		$('#proxy-submit').click(function(){
 			if($('#none').attr("checked")){
-				postSetting($('#none').val(), "");
+				proxySetting($('#none').val(), "");
 			}else if($('#socks5').attr("checked")){
 				port = $('#portWithSocks').val();
 				if((port.replace(/(^\s*)|(\s*$)/g, "")) == ""){
@@ -260,7 +319,7 @@
 					return false;
 				}else{
 					if(port>0 && port <65535){
-						postSetting($('#http').val(), port);
+						proxySetting($('#http').val(), port);
 					}else{
 						$("#portWithSock").addClass("invalid");
 						return false;
@@ -274,7 +333,7 @@
 					return false;
 				}else{
 					if(port>0 && port <65535){
-						postSetting($('#http').val(), port);
+						proxySetting($('#http').val(), port);
 					}else{
 						$("#portWithHttp").addClass("invalid");
 						return false;
@@ -285,34 +344,43 @@
 				Materialize.toast('你倒是先选一个啊。。。', 3000);
 			}
 		});
-	function closeWin() {
-		var gui = require("nw.gui");
-		var currentWindow = gui.Window.get();
-		currentWindow.on('close', function() {
-			this.hide(); // Pretend to be closed already
-			console.log("We're closing...");
-			$.ajax({
-			type: 'GET',
-			url: 'http://localhost:7493/close',
-			contentType: "application/json",
-			dataType: 'json',
-			success: function(){		
-			},
-			error: function(jqXHR, textStatus){
-				if(textStatus!==null){
-					console.log(textStatus);
-				}
-			},
-			complete: function(jqXHR,textStatus){
-			//	console.log('1');
-				this.close(true);
+		$('#path-submit').click(function(){
+			pathT = $('#path').val();
+			if((pathT.replace(/(^\s*)|(\s*$)/g, "")) == ""){
+					$("#path").addClass("invalid");
+					return false;				
+			}else{
+				pathSetting(pathT);
 			}
+		});
+		function closeWin() {
+			var gui = require("nw.gui");
+			var currentWindow = gui.Window.get();
+			currentWindow.on('close', function() {
+				this.hide(); // Pretend to be closed already
+				console.log("We're closing...");
+				$.ajax({
+				type: 'GET',
+				url: 'http://localhost:7493/close',
+				contentType: "application/json",
+				dataType: 'json',
+				success: function(){		
+				},
+				error: function(jqXHR, textStatus){
+					if(textStatus!==null){
+						console.log(textStatus);
+					}
+				},
+				complete: function(jqXHR,textStatus){
+				//	console.log('1');
+					this.close(true);
+				}
 
-		});
-		//$("body").addClass("loaded");
-		this.close(true); // then close it forcely
-		});
-		
-	}			
+			});
+			//$("body").addClass("loaded");
+			this.close(true); // then close it forcely
+			});
+			
+		}			
 	</script>
 </html>

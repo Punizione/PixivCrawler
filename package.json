@@ -1,6 +1,6 @@
 {
   "main": "loading.html",
-  "name": "App",
+  "name": "PixivCrawler",
   "window": {
     "toolbar": true,
     "frame": true,

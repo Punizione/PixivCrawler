@@ -95,7 +95,7 @@
 			</div>
 			<div class="fixed-action-btn horizontal" style="bottom: 50px; right: 19px;">
 				<a class="btn-floating btn-large gradient-45deg-purple-amber gradient-shadow tooltipped" id="setting" data-position="top" data-tooltip="设置">
-					<i class="material-icons">done_all</i>
+					<i class="material-icons">settings</i>
 				</a>
 			</div>
 			<div id="settingFrame" class="modal">
@@ -236,7 +236,7 @@
 				success: function(msg){
 					console.log(msg); 
 					if(msg.ret){
-						data = msg.data;
+						data = msg.proxyData;
 						if(data['type']=="none"){
 							$('#none').click();
 						}else if(data['type']=="socks5h"){
@@ -279,7 +279,7 @@
 				success: function(msg){
 					console.log(msg); 
 					if(msg.ret){
-						Materialize.toast('设置成功！重启后生效', 1500);
+						Materialize.toast('设置成功！', 1500);
 					}else{
 						Materialize.toast('emmmm脸太黑设置失败...', 3000);
 					}
